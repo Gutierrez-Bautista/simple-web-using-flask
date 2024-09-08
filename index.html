@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- link css with the html when we are working wirh Flask -->
+    <link href="styles/style.css" rel="stylesheet" >
+    <title>Exaple</title>
+</head>
+<body>
+    <h1>Title</h1>
+    <form action="localhost:5000/api/v1/user" method="GET" id="test-form">
+        <label for="user-id">ID</label>
+        <input type="text" id="user-id" name="user_id">
+        
+        <input type="submit" value="submit" id="submit-btn">
+    </form>
+    <button id="get-all-users">get all users</button>
+    <section id="user-info"></section>
+    <script src="javascript/main.js"></script>
+</body>
+</html>
