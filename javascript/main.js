@@ -4,21 +4,16 @@ const submitBtn = document.getElementById('submit-btn')
 
 const allUsers = document.getElementById('get-all-users')
 
-function showUserInfo (data) {
-    console.log(data)
-    const userSection = document.getElementById('user-info')
-    userSection.innerHTML = ''
-
+function showUserInfo (data, whereInsert) {
     const fragment = document.createDocumentFragment()
     
     for (key in data) {
-        console.log(`key = ${key}\ndata[key] = ${data[key]}`)
         let inf = document.createElement('P')
         inf.innerHTML = `${key}: <span class="bold">${data[key]}</span>`
         fragment.appendChild(inf)
     }
 
-    userSection.appendChild(fragment)
+    whereInsert.appendChild(fragment)
 }
 
 submitBtn.addEventListener('click', (evt) => {
@@ -38,19 +33,22 @@ submitBtn.addEventListener('click', (evt) => {
     }
 
 
+    const userSection = document.getElementById('user-info')
+    userSection.innerHTML = ''
     getUser()
-        .then(res => {
-            showUserInfo(res)
-        })
-        .catch(error => {
-            console.log(`fetch failed. data=`)
-            console.log(error)
-        })
+        .then(res => showUserInfo(res, userSection))
+        .catch(error => userSection.innerHTML = `<p>User Not Found</p>`)
 })
 
 allUsers.addEventListener('click', (evt) => {
     fetch('http://localhost:5000/api/v1/users')
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            const userSection = document.getElementById('user-info')
+            userSection.innerHTML = ''
+            data.forEach(element => {
+                showUserInfo(element, userSection)
+            });
+        })
     }
 )
